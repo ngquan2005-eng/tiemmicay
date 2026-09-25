@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#741f2a">
+  <meta name="description" content="Game quản lý tiệm mì cay: nhận đơn, nấu mì, phục vụ khách và nâng cấp quán qua từng ngày.">
+  <title>Tiệm Mì Cay • Trò chơi nấu mì</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23741f2a'/%3E%3Cpath d='M10 30h44l-6 21H16z' fill='%23f5c96b'/%3E%3Cpath d='M13 30q19 13 38 0' fill='none' stroke='%23fff4d2' stroke-width='3'/%3E%3Cpath d='M21 10q-8 10 0 17m11-17q-8 10 0 17m11-17q-8 10 0 17' fill='none' stroke='%23fff4d2' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./game.js"></script>
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">♨</span><div><span class="eyebrow">BẾP NHỎ CỦA BẠN</span><h1>Tiệm Mì Cay</h1></div></div>
+      <div class="top-stats" aria-live="polite">
+        <div class="stat"><span>NGÀY</span><strong id="dayLabel">01</strong></div>
+        <div class="stat"><span>TIỀN QUÁN</span><strong id="moneyLabel">0đ</strong></div>
+        <div class="stat"><span>ĐÁNH GIÁ</span><strong id="ratingLabel">★★★★★</strong></div>
+      </div>
+      <button class="icon-button" id="helpButton" type="button" aria-label="Cách chơi" title="Cách chơi">?</button>
+    </header>
+
+    <section class="service-bar" aria-label="Trạng thái ngày chơi">
+      <div class="service-title"><span class="live-pip" id="livePip"></span><span id="phaseLabel">CHUẨN BỊ MỞ QUÁN</span><span class="bar-divider"></span><span id="servedLabel">0 / 6 phần</span></div>
+      <div class="day-progress"><span id="progressFill"></span></div>
+      <div class="clock" aria-live="off"><span aria-hidden="true">◷</span> <strong id="clockLabel">01:15</strong></div>
+    </section>
+
+    <div class="main-grid">
+      <section class="panel customer-panel" aria-labelledby="customerTitle">
+        <div class="panel-heading"><div><span class="eyebrow">01 / QUẦY KHÁCH</span><h2 id="customerTitle">Khách đang đợi</h2></div><span id="queueCount" class="count-pill">0 khách</span></div>
+        <div id="customerList" class="customer-list" aria-live="polite"></div>
+        <div class="queue-foot"><span>Chọn một khách để phục vụ</span><span aria-hidden="true">✳</span></div>
+      </section>
+
+      <section class="panel kitchen-panel" aria-labelledby="kitchenTitle">
+        <div class="panel-heading"><div><span class="eyebrow">02 / GÓC BẾP</span><h2 id="kitchenTitle">Nấu một tô mì</h2></div><span id="kitchenState" class="small-status">BẾP ĐANG RẢNH</span></div>
+        <div class="bowl-stage">
+          <div class="bowl-halo"></div>
+          <img id="bowlImage" class="bowl-image" src="./assets/noodle-bowl.webp" alt="Tô mì cay minh họa">
+          <div class="steam steam-one"></div><div class="steam steam-two"></div>
+          <div class="bowl-overlay" id="bowlOverlay"><span class="bowl-overlay-icon">✦</span><strong>Sẵn sàng nấu</strong><small>Chọn món theo đơn của khách</small></div>
+        </div>
+        <div class="cook-progress" id="cookProgressWrap" hidden><div id="cookProgressFill"></div></div>
+        <div class="dish-readout" id="dishReadout">Chưa có tô mì nào được nấu.</div>
+        <button class="primary-button cook-button" id="cookButton" type="button" disabled>Nấu mì <span aria-hidden="true">↗</span></button>
+        <button class="serve-button" id="serveButton" type="button" hidden>Phục vụ khách đã chọn <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section class="panel recipe-panel" aria-labelledby="recipeTitle">
+        <div class="panel-heading"><div><span class="eyebrow">03 / CÔNG THỨC</span><h2 id="recipeTitle">Chọn nguyên liệu</h2></div><span class="small-mark" aria-hidden="true">✳</span></div>
+        <p class="recipe-intro">Nhìn phiếu gọi món rồi chọn đúng cả 3 phần.</p>
+        <div id="recipeControls" class="recipe-controls">
+          <fieldset><legend><span>01</span> Nước dùng</legend><div class="choices" data-field="broth"><button class="choice" type="button" data-value="kimchi"><span>🍅</span> Kim chi</button><button class="choice" type="button" data-value="tom yum"><span>🍋</span> Tom yum</button></div></fieldset>
+          <fieldset><legend><span>02</span> Độ cay</legend><div class="choices" data-field="spice"><button class="choice" type="button" data-value="0"><span>🌿</span> Dịu nhẹ</button><button class="choice" type="button" data-value="1"><span>🌶️</span> Cay vừa</button><button class="choice" type="button" data-value="2"><span>🌶️🌶️</span> Cay nhiều</button></div></fieldset>
+          <fieldset><legend><span>03</span> Topping</legend><div class="choices" data-field="topping"><button class="choice" type="button" data-value="nấm"><span>🍄</span> Nấm</button><button class="choice" type="button" data-value="hải sản"><span>🦐</span> Hải sản</button><button class="choice" type="button" data-value="bò"><span>🥩</span> Thịt bò</button></div></fieldset>
+        </div>
+        <div class="recipe-foot"><span class="hint-star" aria-hidden="true">✻</span><span id="recipeHint">Chọn đủ 3 phần để bắt đầu nấu.</span></div>
+      </section>
+    </div>
+
+    <footer class="bottom-bar"><span>NGÀY <b id="footerDay">01</b> <span class="footer-sep">/</span> <span id="footerMessage">Một ngày ngon miệng đang chờ!</span></span><button id="soundButton" type="button" aria-label="Bật âm thanh">♪ <span id="soundLabel">Âm thanh: Tắt</span></button></footer>
+  </main>
+
+  <div id="modalBackdrop" class="modal-backdrop" role="presentation"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><span class="modal-kicker" id="modalKicker">TIỆM MÌ CAY</span><div class="modal-art" aria-hidden="true"><span>✳</span><span>♨</span><span>✳</span></div><h2 id="modalTitle">Chào mừng đến quán!</h2><p id="modalText"></p><div id="modalDetails" class="modal-details"></div><div id="modalActions" class="modal-actions"></div></section></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

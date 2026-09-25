@@ -1,0 +1,10 @@
+TIỆM MÌ CAY - BỘ TỆP ĐĂNG WEB
+
+Giải nén gói này. Các tệp index.html, style.css, game.js, .nojekyll và thư mục assets phải nằm cùng cấp.
+
+Đưa tất cả các tệp đó lên thư mục gốc của repository GitHub. Vào Settings > Pages, chọn Source: Deploy from a branch, Branch: main, Folder: /(root), rồi Save.
+
+Đường dẫn dự kiến: https://TEN-TAI-KHOAN.github.io/tiem-mi-cay/
+Thay TEN-TAI-KHOAN bằng tên tài khoản GitHub của bạn.
+
+Game lưu tiền, ngày chơi và nâng cấp trong trình duyệt trên từng tên miền. Khi chuyển sang đường dẫn mới, tiến trình từ đường dẫn cũ không tự chuyển qua.
